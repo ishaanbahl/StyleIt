@@ -1,0 +1,7 @@
+python-dotenv
+Flask>=2.0
+rembg
+Flask-Cors>=3.0
+onnxruntime
+Pillow
+requests
