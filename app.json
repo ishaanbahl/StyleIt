@@ -47,6 +47,12 @@
         "projectId": "8a26d643-5c20-41a8-960a-90ac0196e26b"
       }
     },
-    "owner": "ishaanbahl"
+    "owner": "ishaanbahl",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/8a26d643-5c20-41a8-960a-90ac0196e26b"
+    }
   }
 }

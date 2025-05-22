@@ -13,6 +13,7 @@ import { SavedImage, NamedCollage, CanvasItem } from '@/types/collage';
 import CollagePreview from '@/components/CollagePreview';
 // ADDED: Import AppColors from central location
 import { AppColors } from '@/constants/Colors';
+import { API_BASE_URL } from '@/constants/ApiConfig';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -167,7 +168,7 @@ export default function HomeScreen() {
     setProcessedImageUrl(null);
     setIsLoading(true);
 
-    const backendUrl = 'http://10.0.0.81:5000/api/remove-background';
+    const backendUrl = `${API_BASE_URL}/api/remove-background`;
     const formData = new FormData();
 
     const uriParts = uri.split('/');

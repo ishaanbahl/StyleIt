@@ -7,12 +7,10 @@ import * as Location from 'expo-location';
 import { SavedImage, NamedCollage, CanvasItem } from '@/types/collage'; // Assuming types are here
 import CollagePreview from '@/components/CollagePreview'; // ADDED: Import shared CollagePreview
 import { AppColors } from '@/constants/Colors';
+import { API_BASE_URL } from '@/constants/ApiConfig'; // ADDED
 
 // TODO: Import a CollagePreview component if available and suitable, or define a simple one.
 // For now, we'll use a placeholder.
-
-// ADDED: Your Flask server's URL for the weather endpoint
-const FLASK_WEATHER_ENDPOINT = 'http://10.0.0.81:5000/api/get_weather'; // Ensure this matches your Flask server address
 
 // Placeholder for actual collage preview - might need to be imported or adapted
 // const CollagePreviewPlaceholder = ({ items, size }: { items: CanvasItem[], size: number }) => {
@@ -44,10 +42,12 @@ export default function AiStylistScreen() {
   const [userGallery, setUserGallery] = useState<SavedImage[]>([]);
   const [locationPermissionStatus, setLocationPermissionStatus] = useState<Location.PermissionStatus | null>(null);
 
+  const STORAGE_KEY_GALLERY = '@StyleIt/SavedImages';
+
   // Fetch user's clothing gallery
   const loadUserGallery = async () => {
     try {
-      const galleryJson = await AsyncStorage.getItem('@StyleIt/SavedImages');
+      const galleryJson = await AsyncStorage.getItem(STORAGE_KEY_GALLERY);
       const gallery: SavedImage[] = galleryJson ? JSON.parse(galleryJson) : [];
       setUserGallery(gallery);
     } catch (e) {
@@ -60,7 +60,7 @@ export default function AiStylistScreen() {
     if (isLoadingWeather && weather) return;
     setIsLoadingWeather(true);
     try {
-      const response = await fetch(`${FLASK_WEATHER_ENDPOINT}?lat=${latitude}&lon=${longitude}`);
+      const response = await fetch(`${API_BASE_URL}/api/get_weather?lat=${latitude}&lon=${longitude}`);
       const responseText = await response.text();
       let data;
       try {

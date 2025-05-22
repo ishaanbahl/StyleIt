@@ -6,13 +6,27 @@ import 'react-native-reanimated';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { AppColors } from '../constants/Colors';
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
 
+// Define a single custom theme using AppColors
+const MyCustomTheme = {
+  ...DefaultTheme, // Start with React Navigation's default light theme
+  colors: {
+    ...DefaultTheme.colors,
+    primary: AppColors.primaryButtonBackground, // Example: using black as primary
+    background: AppColors.screenBackground,
+    card: AppColors.cardBackground,
+    text: AppColors.primaryText,
+    border: AppColors.inputBorder, 
+    // You might want to map other React Navigation theme colors if needed
+    // notification: AppColors.accentColor, // Example if you add an accent color
+  },
+};
+
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
   const [fontsLoaded, fontError] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
     'Wasted-Vindey': require('../assets/fonts/Wasted-Vindey.ttf'),
@@ -34,12 +48,12 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={MyCustomTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
-      <StatusBar style="auto" />
+      <StatusBar style="dark" />
     </ThemeProvider>
   );
 }
